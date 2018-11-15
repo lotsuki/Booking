@@ -32,7 +32,8 @@ class Booking extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/rooms/${this.chooseRandom(1, 1000)}`)
+
+   fetch(`/rooms/${this.chooseRandom(1, 1000)}`)
       .then(res => res.json())
       .then((listing) => { this.setState(listing); })
       .catch((err) => { throw err; });

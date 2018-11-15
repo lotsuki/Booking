@@ -9,8 +9,9 @@
   "scripts": {
     "lint": "eslint ./",
     "start": "node server/server.js",
+    "db:init": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
     "react-dev": "webpack -d --watch",
-    "db:setup": "node db/seeders/seed.js",
+    "db:seed": "node db/index.js",
     "test": "jest --env=jsdom",
     "prestart": "node db/seeders/seed.js"
   },
@@ -24,6 +25,7 @@
     "moment": "^2.22.2",
     "mysql2": "^1.6.1",
     "node-fetch": "^2.2.0",
+    "pg": "^7.6.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dates": "^18.2.0",
@@ -55,6 +57,7 @@
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
     "mocha": "^5.2.0",
+    "pg-format": "^1.0.4",
     "regenerator-runtime": "^0.12.1",
     "sinon": "^7.1.1",
     "style-loader": "^0.23.1",
