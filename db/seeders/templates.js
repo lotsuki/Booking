@@ -1,34 +1,44 @@
-//TEMPLATES
-// var listing = {
-//   id: 0,
-//   owner_id: 0,
-//   review_count: 0,
-//   avg_review: 0,
-//   day_rate: 0,
-//   service_fee: 0,
-//   cleaning_fee: 0,
-//   max_guests: 0,
-//   avg_weekly_views: 0,
-//   avg_monthly_views: 0,
-//   total_views: 0
-// };
+// const copyFrom = require('pg-copy-streams').from;
+// const Readable = require('stream').Readable;
+// const { Pool } = require('pg');
+// const fs = require('fs');
+// const path = require('path');
 
-// var booking = {
-//   id: 0,
-//   listing_id: 0,
-//   customer_id: 0,
-//   start_date: 0,
-//   end_date: 0,
-//   total_cost: 0,
-//   host_booking: false
-// };
+// const pool = new Pool({ database: 'homeshare' });
 
-// var user = {
-//   id: 0,
-//   name: 'John Smith'
-// };
+// // export const bulkInsert = (employees) => {
+// //   pool.connect().then(client=>{
+// //     let done = () => {
+// //       client.release();
+// //     }
+// //     var stream = client.query(copyFrom('COPY listings (host_id,max_guests,price_per_night,review_count,rating) FROM STDIN'));
+// //     var rs = new Readable;
+// //     let currentIndex = 0;
+// //     rs._read = function () {
+// //       if (currentIndex === employees.length) {
+// //         rs.push(null);
+// //       } else {
+// //         let employee = employees[currentIndex];
+// //         rs.push(employee.name + '\t' + employee.age + '\t' + employee.salary + '\n');
+// //         currentIndex = currentIndex+1;
+// //       }
+// //     };
+// //     let onError = strErr => {
+// //       console.error('Something went wrong:', strErr);
+// //       done();
+// //     };
+// //     rs.on('error', onError);
+// //     stream.on('error', onError);
+// //     stream.on('end',done);
+// //     rs.pipe(stream);
+// //   });
+// // }
 
-// var customer = {
-//   id: 0,
-//   name: 'Jane Doe'
-// };
+// pool.connect(function(err, client, done) {
+//   var stream = client.query(copyFrom('COPY listings FROM STDIN'));
+//   var fileStream = fs.createReadStream('./text.csv')
+//   //fileStream.on('error', done);
+//   if (err) { console.log(err); }
+//   else { fileStream.pipe(stream).on('finish', done).on('error', done); }
+
+// });

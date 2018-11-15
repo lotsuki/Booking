@@ -1,6 +1,10 @@
 const { Pool, Client } = require('pg');
 const faker = require('faker');
 const format = require('pg-format');
+//const json2csv = require('json2csv').parse;
+const Json2csvParser = require('json2csv').Parser;
+const fs = require('fs');
+
 
 // const db = new Client({ database: 'homeshare' });
 // const text = 'INSERT INTO listings(host_id, max_guests, price_per_night, review_count, rating) VALUES($1, $2, $3, $4, $5)'
@@ -16,10 +20,46 @@ const format = require('pg-format');
 
 //const db = new Pool({ database: 'homeshare' });
 const rooms = [];
-for (let i = 0; i < 10; i++) {
-  rooms.push([faker.random.number({min: 1000, max: 5000}), faker.random.number({min: 1, max: 8}), faker.commerce.price(50, 300), faker.random.number({min: 20, max: 150}), faker.random.number({min: 1, max: 5})]);
+for (let i = 6; i < 10; i++) {
+  rooms.push(
+    {
+      "id": i,
+      "host_id": faker.random.number({min: 1000, max: 5000}),
+      "max_guests": faker.random.number({min: 1, max: 8}),
+      "price_per_night": faker.random.number({min: 50, max: 300}),
+      "review_count": faker.random.number({min: 20, max: 150}),
+      "rating": faker.random.number({min: 1, max: 5}),
+
+    }
+  );
 }
-const query = format('INSERT INTO listings(host_id, max_guests, price_per_night, review_count, rating) VALUES %L returning id', rooms);
+//const stringified = JSON.stringify(rooms)
+
+// const query = format('INSERT INTO listings(host_id, max_guests, price_per_night, review_count, rating) VALUES %L returning id', room);
+
+const fields = ["id","host_id", "max_guests", "price_per_night", "review_count", "rating"]
+
+//const opts = { fields };
+
+const json2csvParser = new Json2csvParser({ fields });
+const csv = json2csvParser.parse(rooms);
+
+console.log(csv);
+
+// try {
+//   const csv = json2csv(stringified, opts);
+//   console.log(csv);
+// } catch (err) {
+//   console.error(err);
+// }
+
+// var csv = JSONtoCSV(stringified, { fields: ["host_id", "max_guests", "price_per_night", "review_count", "rating" ]});
+fs.writeFileSync("./seeders/text.csv", csv);
+
+
+
+
+
 
 // const db = new Client({ database: 'homeshare' });
 // db.connect()
@@ -30,18 +70,18 @@ const query = format('INSERT INTO listings(host_id, max_guests, price_per_night,
 //   db.end()
 // })
 
-(async () => {
-  var client = new Client({ database: 'homeshare' });
-  var db = await client.connect();
-  try {
-    let { rows } = await client.query(query, rooms);
-    console.log(rows);
-  } catch (e) {
-    console.log(e)
-  } finally {
-    client.end();
-  }
-})().catch(e => console.error(e.message, e.stack))
+// (async () => {
+//   var client = new Client({ database: 'homeshare' });
+//   var db = await client.connect();
+//   try {
+//     let { rows } = await client.query(query, rooms);
+//     console.log(rows);
+//   } catch (e) {
+//     console.log(e)
+//   } finally {
+//     client.end();
+//   }
+// })().catch(e => console.error(e.message, e.stack))
 
 //populateTable();
 

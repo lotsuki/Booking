@@ -19,3 +19,6 @@ CREATE TABLE IF NOT EXISTS bookings (
   total_price NUMERIC NOT NULL,
   booking_date DATE NOT NULL
 );
+
+
+\copy listings from './db/seeders/text.csv' with (format csv);

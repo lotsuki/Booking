@@ -3,12 +3,27 @@ const path = require('path');
 //const db = require('../db/controllers/index');
 const bodyParser = require("body-parser");
 const { Pool, Client } = require('pg');
-
+const db = new Pool({ database: 'homeshare' });
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '..', '/public')));
 app.use(bodyParser.json());
+
+app.get('rooms/:listingId', (req, res) => {
+  db.connect((err, client, done) => {
+    if (err) throw err
+    db.query(text, values, (err, res) => {
+      done()
+
+      if (err) {
+        console.log(err.stack)
+      } else {
+        console.log(res.rows[0])
+      }
+    })
+  })
+});
 
 // app.get('/users/:userId', (req, res) => {
 //   db.user.get(req.params.userId)
