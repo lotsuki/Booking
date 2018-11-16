@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const { Pool, Client } = require('pg');
 const db = new Pool({ database: 'homeshare' });
 
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '..', '/public')));

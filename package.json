@@ -7,12 +7,12 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "lint": "eslint ./",
+    "build-dev": "webpack -d --watch",
     "start": "node server/server.js",
-    "db:init": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
-    "react-dev": "webpack -d --watch",
-    "test": "jest --env=jsdom",
-    "prestart": "node db/seeders/seed.js"
+    "db:init": "node db/index.js",
+    "db:seed": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
+    "lint": "eslint ./",
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
