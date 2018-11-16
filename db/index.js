@@ -1,209 +1,124 @@
 const { Pool, Client } = require('pg');
 const faker = require('faker');
-const format = require('pg-format');
-//const json2csv = require('json2csv').parse;
-const Json2csvParser = require('json2csv').Parser;
 const fs = require('fs');
 
 
-// const db = new Client({ database: 'homeshare' });
-// const text = 'INSERT INTO listings(host_id, max_guests, price_per_night, review_count, rating) VALUES($1, $2, $3, $4, $5)'
-// const values = [3457, 4, 45.89, 47, 4]
+var index = 0;
+let writeStream = fs.createWriteStream('./seeders/text.csv');
 
-// db.connect()
+function populateFile() {
+  index++;
+  let id = index;
+  let host = faker.random.number({min: 1000, max: 5000});
+  let guest = faker.random.number({min: 1, max: 8});
+  let price = faker.random.number({min: 50, max: 300});
+  let review = faker.random.number({min: 20, max: 150});
+  let rating = faker.random.number({min: 1, max: 5});
 
-// db.query(text, values, (err, res) => {
-//   if (err) { console.log('err', err) }
-//     else { console.log(res.rows[0]) }
-//   db.end()
-// })
+  if (index > 10000000) {
+    return writeStream.end();
+  }
+  var ableToWrite = writeStream.write(`${id},${host},${guest},${price},${review},${rating}\n`);
+  if (!ableToWrite) {
+    writeStream.once('drain', populateFile);
+  } else {
+    populateFile();
+  }
+};
 
-//const db = new Pool({ database: 'homeshare' });
-const rooms = [];
-for (let i = 6; i < 10; i++) {
-  rooms.push(
-    {
-      "id": i,
-      "host_id": faker.random.number({min: 1000, max: 5000}),
-      "max_guests": faker.random.number({min: 1, max: 8}),
-      "price_per_night": faker.random.number({min: 50, max: 300}),
-      "review_count": faker.random.number({min: 20, max: 150}),
-      "rating": faker.random.number({min: 1, max: 5}),
+populateFile();
 
-    }
-  );
-}
-//const stringified = JSON.stringify(rooms)
+// const pool = new Pool({ database: 'homeshare' });
 
-// const query = format('INSERT INTO listings(host_id, max_guests, price_per_night, review_count, rating) VALUES %L returning id', room);
-
-const fields = ["id","host_id", "max_guests", "price_per_night", "review_count", "rating"]
-
-//const opts = { fields };
-
-const json2csvParser = new Json2csvParser({ fields });
-const csv = json2csvParser.parse(rooms);
-
-console.log(csv);
-
-// try {
-//   const csv = json2csv(stringified, opts);
-//   console.log(csv);
-// } catch (err) {
-//   console.error(err);
-// }
-
-// var csv = JSONtoCSV(stringified, { fields: ["host_id", "max_guests", "price_per_night", "review_count", "rating" ]});
-fs.writeFileSync("./seeders/text.csv", csv);
-
-
-
-
-
-
-// const db = new Client({ database: 'homeshare' });
-// db.connect()
-// console.log(rooms)
-// db.query(query, rooms, (err, res) => {
-//   if (err) { console.log('err', err) }
-//     else { console.log(res.rows[0]) }
-//   db.end()
-// })
-
-// (async () => {
-//   var client = new Client({ database: 'homeshare' });
-//   var db = await client.connect();
-//   try {
-//     let { rows } = await client.query(query, rooms);
-//     console.log(rows);
-//   } catch (e) {
-//     console.log(e)
-//   } finally {
-//     client.end();
-//   }
-// })().catch(e => console.error(e.message, e.stack))
-
-//populateTable();
-
-
-
-// db.on('connect', () => {
-//   console.log('Connected to PostgreSQL')
+// pool.connect(function(err, client, done) {
+//   var stream = client.query(copyFrom("\copy listings from './seeders/text.csv' with (format csv)"));
+//   var fileStream = fs.createReadStream('./seeders/text.csv')
+//   // fileStream.on('error', done);
+//   // stream.on('error', done);
+//   stream.on('end', done);
+//   fileStream.pipe(stream);
 // });
 
 
-// db.connect((err, client, done) => {
-//   if (err) throw err
-//   db.query(text, rooms, (err, res) => {
-//     done()
 
-//     if (err) {
-//       console.log(err.stack)
-//     } else {
-//       console.log(res.rows[0])
+//   pool.connect().then(client=>{
+//     let done = () => {
+//       client.release();
 //     }
-//   })
-// })
-
-
-// let users = [['test@example.com', 'Fred'], ['test2@example.com', 'Lynda']];
-// let query1 = format('INSERT INTO users (email, name) VALUES %L returning id', users);
-
-// async function run() {
-//   let client;
-//   try {
-//     client = new pg.Client({
-//       connectionString: 'postgresql://localhost/node_example'
-//     });
-//     await client.connect();
-//     let {rows} = await client.query(query1);
-//     console.log(rows);
-//   } catch (e) {
-//     console.error(e);
-//   } finally {
-//     client.end();
-//   }
-// }
-
-// run();
-
-
-
-// {
-//   host_id: faker.random.number({min: 1000, max: 5000}),
-//   max_guests: faker.random.number({min: 1, max: 8}),
-//   price_per_night: faker.commerce.price(50, 300),
-//   review_count: faker.random.number({min: 20, max: 150}),
-//   rating: Nember(faker.finance.amount(1, 5, 1))
-
-// }
-
-// 'use strict';
-
-// const pg = require('pg');
-// const format = require('pg-format');
-
-
-
-
-
-// const config = {
-//   host: process.env.RDS_HOSTNAME || 'localhost',
-//   database: process.env.RDS_DB_NAME || 'airjld',
-//   user: process.env.RDS_USERNAME || 'root',
-//   password: process.env.RDS_PASSWORD || 'password',
-//   port: process.env.RDS_PORT,
-// };
-
-
-
-// module.exports = new Sequelize('homeshare', 'root', "''", {
-//   host: 'localhost',
-//   dialect: 'mysql',
-//   operatorsAliases: false,
-//   logging: false,
-
-//   pool: {
-//     max: 5,
-//     min: 0,
-//     acquire: 30000,
-//     idle: 10000,
-//   },
-// });
-
-//module.exports = new Sequelize('homeshare', 'root', '""');
-
-
-
-// var User = db.define('User', {
-//   username: Sequelize.STRING
-// });
-
-// var Message = db.define('Message', {
-//   userid: Sequelize.INTEGER,
-//   text: Sequelize.STRING,
-//   roomname: Sequelize.STRING
-// });
-
-// /* Sequelize comes with built in support for promises
-//  * making it easy to chain asynchronous operations together */
-// User.sync()
-//   .then(function() {
-//     // Now instantiate an object and save it:
-//     return User.create({username: 'Jean Valjean'});
-//   })
-//   .then(function() {
-//     // Retrieve objects from the database:
-//     return User.findAll({ where: {username: 'Jean Valjean'} });
-//   })
-//   .then(function(users) {
-//     users.forEach(function(user) {
-//       console.log(user.username + ' exists');
-//     });
-//     db.close();
-//   })
-//   .catch(function(err) {
-//     // Handle any error in the chain
-//     console.error(err);
-//     db.close();
+//     var stream = client.query("\copy listings from './db/seeders/text.csv' with (format csv)");
+//     var rs = new Readable;
+//     rs._read = function () {
+//       if (currentIndex === 10) {
+//         rs.push(null);
+//       } else {
+//         rs.push(currentIndex + '\t' + faker.random.number({min: 1000, max: 5000}) + '\t' + faker.random.number({min: 1, max: 8}) + '\t' + faker.random.number({min: 50, max: 300}) + '\t' + faker.random.number({min: 20, max: 150}) + '\t' + faker.random.number({min: 1, max: 5}) + '\n');
+//         currentIndex++;
+//       }
+//     };
+//     let onError = strErr => {
+//       console.error('Something went wrong:', strErr);
+//       done();
+//     };
+//     rs.on('error', onError);
+//     stream.on('error', onError);
+//     stream.on('end',done);
+//     rs.pipe(stream);
+//     process.stdout.pipe(stream);
 //   });
+
+
+
+
+
+//   const copyFrom = require('pg-copy-streams').from;
+// const Readable = require('stream').Readable;
+// const { Pool,Client } = require('pg');
+// const fs = require('fs');
+// const path = require('path');
+// const datasourcesConfigFilePath = path.join(__dirname,'..','..','server','datasources.json');
+// const datasources = JSON.parse(fs.readFileSync(datasourcesConfigFilePath, 'utf8'));
+
+// const pool = new Pool({
+//     user: datasources.PG.user,
+//     host: datasources.PG.host,
+//     database: datasources.PG.database,
+//     password: datasources.PG.password,
+//     port: datasources.PG.port,
+// });
+
+// export const bulkInsert = (employees) => {
+//   pool.connect().then(client=>{
+//     let done = () => {
+//       client.release();
+//     }
+//     var stream = client.query(copyFrom('COPY employee (name,age,salary) FROM STDIN'));
+//     var rs = new Readable;
+//     let currentIndex = 0;
+//     rs._read = function () {
+//       if (currentIndex === employees.length) {
+//         rs.push(null);
+//       } else {
+//         let employee = employees[currentIndex];
+//         rs.push(employee.name + '\t' + employee.age + '\t' + employee.salary + '\n');
+//         currentIndex = currentIndex+1;
+//       }
+//     };
+//     let onError = strErr => {
+//       console.error('Something went wrong:', strErr);
+//       done();
+//     };
+//     rs.on('error', onError);
+//     stream.on('error', onError);
+//     stream.on('end',done);
+//     rs.pipe(stream);
+//   });
+// }
+
+
+
+
+
+
+
+
+

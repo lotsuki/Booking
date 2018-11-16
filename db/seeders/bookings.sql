@@ -1,4 +1,5 @@
-
+DROP TABLE bookings;
+DROP TABLE listings;
 
 CREATE TABLE IF NOT EXISTS listings (
   id SERIAL PRIMARY KEY,
