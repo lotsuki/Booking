@@ -3,9 +3,8 @@ DROP TABLE listings;
 
 CREATE TABLE IF NOT EXISTS listings (
   id SERIAL PRIMARY KEY,
-  host_id INTEGER,
-  max_guests INTEGER,
-  price_per_night NUMERIC,
+  max_guests INTEGER NOT NULL,
+  price_per_night NUMERIC NOT NULL,
   review_count INTEGER,
   rating INTEGER
 );
@@ -22,4 +21,7 @@ CREATE TABLE IF NOT EXISTS bookings (
 );
 
 
-\copy listings from './db/seeders/text.csv' with (format csv);
+\copy listings from '.../text.csv' with (format csv);
+
+
+
