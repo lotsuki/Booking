@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS listings (
 );
 
 CREATE TABLE IF NOT EXISTS bookings (
-  id SERIAL PRIMARY KEY,
+  id,
   listing_id INTEGER REFERENCES listings (id),
   customer_name VARCHAR NOT NULL,
   start_date DATE NOT NULL,
@@ -18,10 +18,10 @@ CREATE TABLE IF NOT EXISTS bookings (
   total_days INTEGER,
   total_price NUMERIC NOT NULL,
   booking_date DATE NOT NULL
-);
+  PRIMARY KEY(id(listing_id, start_date, end_date))
+) WITH CLUSTERING ORDER BY (start_date ASC)
 
 
-\copy listings from '.../text.csv' with (format csv);
 
 
 

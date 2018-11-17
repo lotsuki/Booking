@@ -1,0 +1,8 @@
+cluster_name: 'homeshare‘
+num_tokens: 256
+Data_file_directories:
+- /var/lib/cassandra/data
+listen_address: localhost
+rpc_address: localhost
+native_transport_port: 9042
+endpoint_snitch: SimpleSnitch
