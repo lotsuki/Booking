@@ -1,23 +1,33 @@
-const Sequelize = require('sequelize');
+const faker = require('faker');
+const fs = require('fs');
 
-const config = {
-  host: process.env.RDS_HOSTNAME || 'localhost',
-  database: process.env.RDS_DB_NAME || 'airjld',
-  user: process.env.RDS_USERNAME || 'root',
-  password: process.env.RDS_PASSWORD || 'password',
-  port: process.env.RDS_PORT,
-};
+var index = 0;
+let writeStream = fs.createWriteStream('text.csv');
 
-module.exports = new Sequelize(config.database, config.user, config.password, {
-  host: config.host,
-  dialect: 'mysql',
-  operatorsAliases: false,
-  logging: false,
+(function createData() {
+  index++;
+  let id = index;
+  let guest = faker.random.number({min: 1, max: 8});
+  let price = faker.random.number({min: 50, max: 300});
+  let review = faker.random.number({min: 20, max: 150});
+  let rating = faker.random.number({min: 1, max: 5});
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
-});
+  if (index > 10000000) {
+    return writeStream.end();
+  }
+  var ableToWrite = writeStream.write(`${id},${guest},${price},${review},${rating}\n`);
+  if (!ableToWrite) {
+    writeStream.once('drain', createData);
+  } else {
+    createData();
+  }
+})();
+
+
+
+
+
+
+
+
+

@@ -7,12 +7,12 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "lint": "eslint ./",
+    "build-dev": "webpack -d --watch",
     "start": "node server/server.js",
-    "react-dev": "webpack -d --watch",
-    "db:setup": "node db/seeders/seed.js",
-    "test": "jest --env=jsdom",
-    "prestart": "node db/seeders/seed.js"
+    "db:init": "node db/index.js",
+    "db:seed": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
+    "lint": "eslint ./",
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -24,6 +24,7 @@
     "moment": "^2.22.2",
     "mysql2": "^1.6.1",
     "node-fetch": "^2.2.0",
+    "pg": "^7.6.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dates": "^18.2.0",
