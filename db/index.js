@@ -15,7 +15,7 @@ let writeStream = fs.createWriteStream('text.csv');
   let rating = faker.random.number({min: 1, max: 5});
   //let rating = faker.lorem.paragraph();
 
-  if (index > 1000000) {
+  if (index > 10000000) {
     return writeStream.end();
   }
   var ableToWrite = writeStream.write(`${id},${guest},${price},${review},${rating}\n`);
