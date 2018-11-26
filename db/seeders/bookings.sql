@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS bookings (
 );
 
 
-\copy listings from '.../text.csv' with (format csv);
+\copy listings from './text.csv' with (format csv);
 
 
 

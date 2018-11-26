@@ -1,6 +1,7 @@
 const faker = require('faker');
 const fs = require('fs');
 
+
 var index = 0;
 let writeStream = fs.createWriteStream('text.csv');
 
@@ -22,10 +23,6 @@ let writeStream = fs.createWriteStream('text.csv');
     createData();
   }
 })();
-
-
-
-
 
 
 
