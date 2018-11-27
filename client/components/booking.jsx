@@ -3,6 +3,7 @@
 import React from 'react';
 import fetch from 'node-fetch';
 import moment from 'moment';
+import faker from 'faker';
 
 import '../../public/style.css';
 import Calendar from './calendar';
@@ -12,11 +13,11 @@ import Reviews from './reviews';
 import Price from './price';
 import Subtotal from './subtotal';
 
+
 class Booking extends React.Component {
   constructor() {
     super();
     this.state = {
-      customerId: this.chooseRandom(1, 200),
       guestCount: 1,
       daysBooked: 0,
       startDate: null,
@@ -37,6 +38,7 @@ class Booking extends React.Component {
       .then(res => res.json())
       .then((listing) => { this.setState(listing); })
       .catch((err) => { throw err; });
+
   }
 
   chooseRandom(min, max) {
@@ -46,7 +48,7 @@ class Booking extends React.Component {
 
   handleGuestCountChange(newCount) {
     const {
-      day_rate,
+      price_per_night,
       daysBooked,
       cleaning_fee,
       service_fee,
@@ -54,25 +56,28 @@ class Booking extends React.Component {
 
     this.setState({
       guestCount: newCount,
-      total: ((day_rate * daysBooked) + cleaning_fee + service_fee) * newCount,
+      total: ((price_per_night * daysBooked) + cleaning_fee + service_fee) * newCount,
     });
   }
 
   handleDatesChange(val) {
     const {
-      day_rate,
+      price_per_night,
       cleaning_fee,
       service_fee,
       guestCount,
     } = this.state;
     const { startDate, endDate } = val;
-    const days = moment(endDate).diff(startDate, 'days');
+    var days = moment(endDate).diff(startDate, 'days');
+    console.log(service_fee)
 
     this.setState({
       startDate,
       endDate,
       daysBooked: days || 1,
-      total: ((day_rate * days) + cleaning_fee + service_fee) * guestCount,
+      total: ((price_per_night * days) + cleaning_fee + service_fee) * guestCount,
+      cleaning_fee: price_per_night * 0.5,
+      service_fee: price_per_night * 0.3
     });
   }
 
@@ -83,22 +88,25 @@ class Booking extends React.Component {
   }
 
   handleOnSubmit(e) {
+
     e.preventDefault();
     const {
       id,
-      customerId,
       startDate,
       endDate,
       total,
+      daysBooked
     } = this.state;
+
 
     this.booking = {
       listing_id: id,
-      customer_id: customerId,
-      start_date: moment(startDate).format(),
-      end_date: moment(endDate).format(),
-      total_cost: total,
-      host_booking: false,
+      customer_name: faker.name.findName(),
+      start_date: moment(startDate).format('YYYY-MM-DD'),
+      end_date: moment(endDate).format('YYYY-MM-DD'),
+      total_days: daysBooked,
+      total_price: total,
+      booking_date: moment().format('YYYY-MM-DD')
     };
 
     fetch('/booking', {
@@ -119,16 +127,17 @@ class Booking extends React.Component {
       endDate,
       focusedInput,
       total,
-      stars,
-      day_rate,
+      rating,
+      price_per_night,
       daysBooked,
     } = this.state;
+
 
     return (
       <div className="container">
         <div className="price-review">
-          <Price day_rate={day_rate} />
-          <Reviews reviews={review_count} stars={stars} />
+          <Price price_per_night={price_per_night} />
+          <Reviews reviews={review_count} rating={rating} />
         </div>
         <Calendar
           focusedInputData={focusedInput}

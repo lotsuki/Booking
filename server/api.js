@@ -1,30 +1,46 @@
 const express = require('express');
 const path = require('path');
-//const db = require('../db/controllers/index');
 const bodyParser = require("body-parser");
-const { Pool, Client } = require('pg');
-const db = new Pool({ database: 'homeshare' });
-
+const db = require('../db/index.js');
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '..', '/public')));
 app.use(bodyParser.json());
 
-app.get('rooms/:listingId', (req, res) => {
-  db.connect((err, client, done) => {
-    if (err) throw err
-    db.query(text, values, (err, res) => {
-      done()
 
+app.get('/rooms/:listingId', (req, res) => {
+  const id = req.params.listingId;
+   db.query(`SELECT * FROM listings WHERE id=${id}`, (err, result) => {
       if (err) {
-        console.log(err.stack)
+        res.status(500).send('Could not fetch listing');
       } else {
-        console.log(res.rows[0])
+        res.send(result.rows[0]);
       }
-    })
   })
 });
+
+var count = 0;
+
+app.post('/booking', (req, res) => {
+  count++;
+
+  const {
+    listing_id,
+    customer_name,
+    start_date,
+    end_date,
+    total_days,
+    total_price,
+    booking_date
+  } = req.body;
+
+  db.query(`INSERT INTO bookings(id, listing_id, customer_name, start_date, end_date, total_days, total_price, booking_date) VALUES ('${count}', '${listing_id}', '${customer_name}', '${start_date}', '${end_date}', '${total_days}', '${total_price}', '${booking_date}')`, (err, result) => {
+      if (err) { console.log('Could not create booking', err) }
+      else { console.log('Booking was successful', result) }
+  });
+});
+
 
 // app.get('/users/:userId', (req, res) => {
 //   db.user.get(req.params.userId)
@@ -72,12 +88,6 @@ app.get('rooms/:listingId', (req, res) => {
 //     });
 // });
 
-// app.post('/booking', (req, res) => {
-//   console.log('no')
-//   db.booking.set(req.body)
-//     .then(() => { res.send('Booking successful. Enjoy!').end(); })
-//     .catch(() => { res.status(500).send('Could not create booking. Please try again').end(); });
-// });
 
 // api.put()
 

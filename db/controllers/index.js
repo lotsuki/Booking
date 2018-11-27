@@ -64,4 +64,4 @@
 //       .then(() => { console.log(`Booking with ${key} of ${value} successfully deleted`); })
 //       .catch(() => { console.error(`Error deleting booking with ${key} of ${value} `); });
 //   }),
-};
+//};

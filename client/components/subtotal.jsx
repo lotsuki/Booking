@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 const Subtotal = ({
   cleaning_fee,
   service_fee,
-  day_rate,
+  price_per_night,
   total,
   daysBooked,
 }) => (
   <div className="confirm-booking">
     <div className="fee">
       $
-      {day_rate}
+      {price_per_night}
       {' '}
       x
       {' '}
@@ -24,7 +24,7 @@ const Subtotal = ({
       <span className="cost">
         {' '}
         $
-        {day_rate * daysBooked}
+        {price_per_night * daysBooked}
       </span>
     </div>
     <div className="fee-line-break" />
@@ -58,7 +58,7 @@ const Subtotal = ({
 );
 
 Subtotal.propTypes = {
-  day_rate: PropTypes.number,
+  price_per_night: PropTypes.number,
   cleaning_fee: PropTypes.number,
   service_fee: PropTypes.number,
   total: PropTypes.number,
@@ -67,7 +67,7 @@ Subtotal.propTypes = {
 
 Subtotal.defaultProps = {
   total: 0,
-  day_rate: 0,
+  price_per_night: 0,
   cleaning_fee: 0,
   service_fee: 0,
   daysBooked: 0,
