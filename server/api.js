@@ -1,45 +1,45 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require("body-parser");
-const db = require('../db/index.js');
+// const express = require('express');
+// const path = require('path');
+// const bodyParser = require("body-parser");
+// const db = require('../db/index.js');
 
-const app = express();
+// const app = express();
 
-app.use(express.static(path.join(__dirname, '..', '/public')));
-app.use(bodyParser.json());
+// app.use(express.static(path.join(__dirname, '..', '/public')));
+// app.use(bodyParser.json());
 
 
-app.get('/rooms/:listingId', (req, res) => {
-  const id = req.params.listingId;
-   db.query(`SELECT * FROM listings WHERE id=${id}`, (err, result) => {
-      if (err) {
-        res.status(500).send('Could not fetch listing');
-      } else {
-        res.send(result.rows[0]);
-      }
-  })
-});
+// app.get('/rooms/:listingId', (req, res) => {
+//   const id = req.params.listingId;
+//    db.query(`SELECT * FROM listings WHERE id=${id}`, (err, result) => {
+//       if (err) {
+//         res.status(500).send('Could not fetch listing');
+//       } else {
+//         res.send(result.rows[0]);
+//       }
+//   })
+// });
 
-var count = 0;
+// var count = 0;
 
-app.post('/booking', (req, res) => {
-  count++;
+// app.post('/booking', (req, res) => {
+//   count++;
 
-  const {
-    listing_id,
-    customer_name,
-    start_date,
-    end_date,
-    total_days,
-    total_price,
-    booking_date
-  } = req.body;
+//   const {
+//     listing_id,
+//     customer_name,
+//     start_date,
+//     end_date,
+//     total_days,
+//     total_price,
+//     booking_date
+//   } = req.body;
 
-  db.query(`INSERT INTO bookings(id, listing_id, customer_name, start_date, end_date, total_days, total_price, booking_date) VALUES ('${count}', '${listing_id}', '${customer_name}', '${start_date}', '${end_date}', '${total_days}', '${total_price}', '${booking_date}')`, (err, result) => {
-      if (err) { console.log('Could not create booking', err) }
-      else { console.log('Booking was successful', result) }
-  });
-});
+//   db.query(`INSERT INTO bookings(id, listing_id, customer_name, start_date, end_date, total_days, total_price, booking_date) VALUES ('${count}', '${listing_id}', '${customer_name}', '${start_date}', '${end_date}', '${total_days}', '${total_price}', '${booking_date}')`, (err, result) => {
+//       if (err) { console.log('Could not create booking', err) }
+//       else { console.log('Booking was successful', result) }
+//   });
+// });
 
 
 // app.get('/users/:userId', (req, res) => {
@@ -98,4 +98,4 @@ app.post('/booking', (req, res) => {
 
 
 
-module.exports = app;
+// module.exports = app;
