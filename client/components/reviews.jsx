@@ -7,16 +7,16 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faStar);
 
-const Reviews = ({ reviews, stars }) => {
+const Reviews = ({ reviews, rating }) => {
   const starDisplay = [];
 
-  for (let i = 1; i <= stars; i += 1) {
+  for (let i = 1; i <= rating; i += 1) {
     starDisplay.push(i);
   }
 
   return (
-    <div>
-      <div className="stars">
+   <div>
+      <div className="rating">
         {starDisplay.map(e => <FontAwesomeIcon icon="star" key={e} />)}
         <span className="reviews">
           &nbsp;
@@ -31,12 +31,12 @@ const Reviews = ({ reviews, stars }) => {
 
 Reviews.propTypes = {
   reviews: PropTypes.number,
-  stars: PropTypes.number,
+  rating: PropTypes.number,
 };
 
 Reviews.defaultProps = {
   reviews: 0,
-  stars: 1,
+  rating: 1,
 };
 
 export default Reviews;

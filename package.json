@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build-dev": "webpack -d --watch",
-    "start": "node server/server.js",
-    "db:init": "node db/index.js",
+    "start": "nodemon server/server.js",
+    "db:init": "node db/seeders/seed.js",
     "db:seed": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
     "lint": "eslint ./",
     "test": "jest --env=jsdom"
@@ -23,6 +23,7 @@
     "i": "^0.3.6",
     "moment": "^2.22.2",
     "mysql2": "^1.6.1",
+    "newrelic": "^4.11.0",
     "node-fetch": "^2.2.0",
     "pg": "^7.6.1",
     "prop-types": "^15.6.2",
@@ -56,6 +57,7 @@
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
     "mocha": "^5.2.0",
+    "process.hrtime": "^1.0.3",
     "regenerator-runtime": "^0.12.1",
     "sinon": "^7.1.1",
     "style-loader": "^0.23.1",

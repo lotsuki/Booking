@@ -3,22 +3,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Price = ({ day_rate }) => (
+const Price = ({ price_per_night }) => (
   <div className="price">
     <div className="rate">
       $
-      {day_rate}
+      {price_per_night}
       <span className="per-night"> per night</span>
     </div>
   </div>
 );
 
 Price.propTypes = {
-  day_rate: PropTypes.number,
+  price_per_night: PropTypes.number,
 };
 
 Price.defaultProps = {
-  day_rate: 0,
+  price_per_night: 0,
 };
 
 export default Price;
