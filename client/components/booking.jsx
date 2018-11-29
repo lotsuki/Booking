@@ -1,4 +1,4 @@
-/* eslint camelcase: "off" */
+ /* eslint camelcase: "off" */
 
 import React from 'react';
 import fetch from 'node-fetch';
