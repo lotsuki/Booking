@@ -39,7 +39,7 @@ app.post('/booking', (req, res) => {
 
   db.query(`INSERT INTO bookings(id, listing_id, customer_name, start_date, end_date, total_days, total_price, booking_date) VALUES ('${count}', '${listing_id}', '${customer_name}', '${start_date}', '${end_date}', '${total_days}', '${total_price}', '${booking_date}')`, (err, result) => {
       if (err) { console.log('Could not create booking', err) }
-      else { console.log('Booking was successful', result) }
+      else { console.log('Booking was successful') }
   });
 });
 

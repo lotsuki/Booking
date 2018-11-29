@@ -69,15 +69,16 @@ class Booking extends React.Component {
     } = this.state;
     const { startDate, endDate } = val;
     var days = moment(endDate).diff(startDate, 'days');
-    console.log(service_fee)
+    var cleanFee = Math.floor(price_per_night * 0.5);
+    var serviceFee = Math.floor(price_per_night * 0.3);
 
     this.setState({
       startDate,
       endDate,
       daysBooked: days || 1,
       total: ((price_per_night * days) + cleaning_fee + service_fee) * guestCount,
-      cleaning_fee: price_per_night * 0.5,
-      service_fee: price_per_night * 0.3
+      cleaning_fee: cleanFee,
+      service_fee: serviceFee
     });
   }
 
