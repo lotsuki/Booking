@@ -10,7 +10,7 @@
     "build-dev": "webpack -d --watch",
     "start": "nodemon server/server.js",
     "db:init": "node db/seeders/seed.js",
-    "db:seed": "psql -d homeshare -U postgres -f db/seeders/bookings.sql",
+    "db:seed": "psql -h ec2-3-16-108-112.us-east-2.compute.amazonaws.com -U postgres -d airjld -f db/seeders/bookings.sql",
     "lint": "eslint ./",
     "test": "jest --env=jsdom"
   },
