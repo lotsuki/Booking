@@ -91,10 +91,6 @@ app.post('/booking', (req, res) => {
 // });
 
 
-// api.put()
-
-// api.delete()
-
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
