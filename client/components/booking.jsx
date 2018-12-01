@@ -115,7 +115,7 @@ class Booking extends React.Component {
       headers: { 'Content-Type': 'application/json' },
     })
       .then(() => { console.log('Booking was successful!'); })
-      .catch((err) => { console.log('Could not post data', err; });
+      .catch((err) => { console.log('Could not post data', err) });
   }
 
   render() {
