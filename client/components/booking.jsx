@@ -1,4 +1,3 @@
- /* eslint camelcase: "off" */
 
 import React from 'react';
 import fetch from 'node-fetch';
@@ -37,7 +36,7 @@ class Booking extends React.Component {
    fetch(`/rooms/${this.chooseRandom(1, 1000)}`)
       .then(res => res.json())
       .then((listing) => { this.setState(listing); })
-      .catch((err) => { throw err; });
+      .catch((err) => { console.log('Could not get data', err); });
 
   }
 
@@ -116,7 +115,7 @@ class Booking extends React.Component {
       headers: { 'Content-Type': 'application/json' },
     })
       .then(() => { console.log('Booking was successful!'); })
-      .catch((err) => { throw err; });
+      .catch((err) => { console.log('Could not post data', err; });
   }
 
   render() {
