@@ -15,9 +15,9 @@ app.get('/rooms/:listingId', (req, res) => {
   const id = req.params.listingId;
    db.query(`SELECT * FROM listings WHERE id=${id}`, (err, result) => {
       if (err) {
-        res.status(500).send('Could not fetch listing');
+        res.status(500).send('Could not fetch listing').end();
       } else {
-        res.send(result.rows[0]);
+        res.send(result.rows[0]).end();
       }
   })
 });
