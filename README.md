@@ -10,7 +10,7 @@ Booking and availability module
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Usage](#usage)
 2. [Requirements](#requirements)
 3. [Development](#development)
 
@@ -25,7 +25,7 @@ npm start
 
 Point your browser here to interact with the live module
 ```
-http://localhost:3000
+http://localhost:3002
 ```
 
 ## Requirements
@@ -47,7 +47,8 @@ npm install
 
 Seed the database with mock data via
 ```
-npm run db:setup
+npm run db:init
+npm run db:seed
 ```
 
 This project has CircleCI so manually running tests shouldn't be necessary, but if you would like to run:
