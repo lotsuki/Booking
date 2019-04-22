@@ -3,10 +3,10 @@ Booking and availability module
 
 ## Related Projects
 
-  - https://github.com/airJLD/Booking
-  - https://github.com/airJLD/Reviews
-  - https://github.com/airJLD/Gallery
-  - https://github.com/airJLD/Description
+  - [Reviews component](https://github.com/SystemDesignCapstone/Reviews)
+  - [Gallery component](https://github.com/SystemDesignCapstone/Gallery)
+  - [Description component](https://github.com/SystemDesignCapstone/Description)
+  - [Proxy](https://github.com/SystemDesignCapstone/Booking-Proxy)
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Booking and availability module
 3. [Development](#development)
 
 ## Usage
-To see this module in action you will need to began a localhost node server. It is currently setup to point at <localhost:3000>. 
+To see this module in action you will need to began a localhost node server. It is currently setup to point at <localhost:3002>. 
 If you wish to make changes the file is located at '/server/server.js'
 
 Run to start node.js server
@@ -30,7 +30,7 @@ http://localhost:3002
 
 ## Requirements
 
-This project requires MySQL 5.7 and Node v8.12
+This project requires PostgreSQL 7.6.1 and Node v6.13.
 It's recommended to install Node via NVM and install the 8.12 build. 
 At the time of writing this, Node LTS is 10.13.0, but it is untested with the current build of this project
 
@@ -65,5 +65,5 @@ As this project is written in ES6 and JSX you will need to use babel to transpil
 Webpack/Babel is setup as a dependency so make sure to run this command before you began coding
 Note: This has a watch flag enabled
 ```
-npm run react-dev
+npm run build-dev
 ```
